@@ -36,6 +36,7 @@ class Options(BaseModel):
     janela_comando_segundos:float=Field(ge=2,le=30)
     voz_ativa:bool
     dispositivo_saida:Optional[str]=None
+    voz_modelo:str=Field(pattern='^(pm_alex|pm_santa|windows_maria)$')
 class SerialOptions(BaseModel):port:str=Field(min_length=1,max_length=40)
 
 @app.get('/',response_class=HTMLResponse)
@@ -51,6 +52,7 @@ def microphone(body:Toggle):runtime.toggle_mic(body.enabled);return {'enabled':r
 @app.post('/api/options')
 def options(body:Options):
     runtime.config.update(body.model_dump())
+    runtime.configure_voice(body.voz_modelo)
     # Permite mover o notebook: salvar opcoes, mas nunca persistir hardware como padrao.
     (ROOT/'config_roberto.json').write_text(json.dumps(runtime.config,ensure_ascii=False,indent=2),encoding='utf-8')
     return {'ok':True}

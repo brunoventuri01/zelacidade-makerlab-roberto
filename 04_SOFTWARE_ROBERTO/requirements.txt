@@ -39,5 +39,7 @@ webrtcvad-wheels>=2.0.14,<3
 pyserial>=3.5,<4
 httpx>=0.28,<1
 piper-tts>=1.3,<2
+kokoro-onnx==0.6.1
+soundfile>=0.14,<1
 # PyAV 19 removeu metadata_errors, ainda usado pelo faster-whisper 1.2.
 av>=14,<17

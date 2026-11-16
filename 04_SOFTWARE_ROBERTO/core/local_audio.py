@@ -107,6 +107,29 @@ class WindowsVoice:
             voice.Speak(text,0)
         finally:pythoncom.CoUninitialize()
 
+class KokoroVoiceBackend:
+    """Kokoro ONNX offline com vozes brasileiras e margem contra corte inicial."""
+    def __init__(self,model_path,voices_path,voice='pm_alex',speed=1.0):
+        self.model_path=Path(model_path);self.voices_path=Path(voices_path)
+        self.voice=voice;self.speed=speed;self.model=None;self.lock=threading.Lock()
+        self.last_voice=self.label
+    @property
+    def label(self):
+        return {'pm_alex':'Kokoro · Alex · masculino · pt-BR','pm_santa':'Kokoro · Santa · masculino · pt-BR'}.get(self.voice,'Kokoro · pt-BR')
+    def load(self):
+        if self.model is None:
+            from kokoro_onnx import Kokoro
+            self.model=Kokoro(str(self.model_path),str(self.voices_path))
+        return self.model
+    def speak(self,text,output_device=None):
+        import numpy as np,sounddevice as sd
+        with self.lock:
+            samples,rate=self.load().create(text,voice=self.voice,speed=self.speed,lang='pt-br',trim=True)
+            padding=np.zeros(int(rate*.18),dtype=np.float32)
+            audio=np.concatenate((padding,np.asarray(samples,dtype=np.float32),padding[:int(rate*.08)]))
+            sd.play(audio,rate,device=output_device,blocking=True)
+            self.last_voice=self.label
+
 class PiperVoiceBackend:
     """Voz neural masculina pt-BR; inferencia e reproducao integralmente locais."""
     def __init__(self,path,length_scale=1.0):

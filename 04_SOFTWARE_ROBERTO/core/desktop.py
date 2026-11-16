@@ -2,7 +2,7 @@
 import base64, concurrent.futures, contextlib, json, logging, re, threading, time
 from pathlib import Path
 from core.assistant import WakeWordGate
-from core.local_audio import AudioLoop,WindowsVoice,PiperVoiceBackend
+from core.local_audio import AudioLoop,WindowsVoice,PiperVoiceBackend,KokoroVoiceBackend
 from core.robot import RobotController,RobotSkill
 from core.llm import LLMClient
 from core.router import CommandRouter
@@ -58,7 +58,7 @@ class DesktopRuntime:
         self.state=WAIT;self.window_until=0;self.pending=None;self.events=[];self.sequence=0
         self.health={'microfone':'Iniciando','fala':'Iniciando','voz':'Piper · Cadu masculino · pt-BR','webcam':'Iniciando','ia':'Verificando'}
         self.audio=AudioLoop(self);self.camera=Camera(self)
-        self.voice=PiperVoiceBackend(self.root/self.config['modelo_voz'],self.config.get('ritmo_voz',1.0)) if self.config.get('motor_voz','piper')=='piper' else WindowsVoice(self.config['velocidade_voz'])
+        self.configure_voice(self.config.get('voz_modelo','pm_alex'))
         self.robot=RobotController(self.config['modo_simulacao'],self.emit)
         self.speaker=PanelSpeaker(self);self.gate=WakeWordGate(self.config['wake_word'])
         self.llm=LLMClient();self.llm.url=self.config['ollama_url'];self.llm.modelo=self.config['modelo_ia']
@@ -72,6 +72,15 @@ class DesktopRuntime:
             self.sequence+=1;event={'seq':self.sequence,'type':kind,'data':data,'time':time.time()}
             self.events.append(event);self.events=self.events[-150:]
         logging.info('%s %s',kind,data if kind not in ('user','assistant') else '[fala no painel]')
+    def configure_voice(self,choice):
+        self.config['voz_modelo']=choice
+        if choice=='windows_maria':
+            self.config['motor_voz']='windows';self.voice=WindowsVoice(self.config['velocidade_voz'])
+            self.health['voz']='Microsoft Maria · feminino · pt-BR'
+        else:
+            self.config['motor_voz']='kokoro'
+            self.voice=KokoroVoiceBackend(self.root/self.config['modelo_kokoro'],self.root/self.config['vozes_kokoro'],choice)
+            self.health['voz']=self.voice.label
     def set_state(self,state):self.state=state;self.emit('state',state)
     def can_listen(self):return self.mic_enabled and not self.busy and not self.speaking
     def begin_processing(self):
@@ -235,7 +244,7 @@ class DesktopRuntime:
         with self.lock:return {'title':self.config['titulo'],'state':self.state,'mic':self.mic_enabled,'speaking':self.speaking,
             'busy':self.busy,'level':self.level,'simulated':self.robot.simulation,'arm_up':self.robot.arm_up,'led_on':self.robot.led_on,'distance_cm':self.robot.last_distance,
             'health':dict(self.health),'events':[e for e in self.events if e['seq']>after],
-            'window_remaining':max(0,self.window_until-time.monotonic()),'config':{k:self.config.get(k) for k in ('janela_comando_segundos','voz_ativa','dispositivo_saida')}}
+            'window_remaining':max(0,self.window_until-time.monotonic()),'config':{k:self.config.get(k) for k in ('janela_comando_segundos','voz_ativa','dispositivo_saida','voz_modelo')}}
     def auto_connect_robot(self):
         """Reconecta a placa conhecida; se a COM mudar, procura um Arduino disponível."""
         from serial.tools import list_ports
