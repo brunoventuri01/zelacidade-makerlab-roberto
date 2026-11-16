@@ -1,5 +1,6 @@
 """Painel local do Roberto. Somente loopback, sem servicos externos de audio/video."""
 import contextlib,json,logging,os,threading,time
+from typing import Optional
 from pathlib import Path
 from dotenv import load_dotenv
 from fastapi import FastAPI,HTTPException,Request
@@ -34,8 +35,7 @@ class Toggle(BaseModel):enabled:bool
 class Options(BaseModel):
     janela_comando_segundos:float=Field(ge=2,le=30)
     voz_ativa:bool
-    webcam_ativa:bool
-    indice_camera:int=Field(ge=0,le=9)
+    dispositivo_saida:Optional[int]=None
 class SerialOptions(BaseModel):port:str=Field(min_length=1,max_length=40)
 
 @app.get('/',response_class=HTMLResponse)
@@ -50,12 +50,14 @@ def utterance(body:Utterance):
 def microphone(body:Toggle):runtime.toggle_mic(body.enabled);return {'enabled':runtime.mic_enabled}
 @app.post('/api/options')
 def options(body:Options):
-    old_camera=runtime.config['indice_camera'];runtime.config.update(body.model_dump())
-    if old_camera!=body.indice_camera:
-        with runtime.camera.lock:runtime.camera._release()
+    runtime.config.update(body.model_dump())
     # Permite mover o notebook: salvar opcoes, mas nunca persistir hardware como padrao.
     (ROOT/'config_roberto.json').write_text(json.dumps(runtime.config,ensure_ascii=False,indent=2),encoding='utf-8')
     return {'ok':True}
+@app.get('/api/audio-outputs')
+def audio_outputs():
+    import sounddevice as sd
+    return [{'id':index,'name':device['name']} for index,device in enumerate(sd.query_devices()) if int(device.get('max_output_channels',0))>0]
 @app.get('/api/camera.jpg')
 def camera():
     with runtime.camera.lock:jpeg=runtime.camera.jpeg

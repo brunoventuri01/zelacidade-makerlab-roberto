@@ -6,7 +6,9 @@ from skills.base import Skill
 def physical_intent(text):
     text=normalizar(text)
     if re.search(r'\b(nao|nunca)\b',text): return None
-    if re.search(r'\b(cumprimente|cumprimentar|cumprimente me|acene|acenar|de um oi|diga oi)\b',text): return 'WAVE'
+    # O Whisper pode flexionar ou aproximar "me cumprimente" para
+    # "me cumprimento"/"meio comprimento" em ambientes ruidosos.
+    if re.search(r'\b(cumprimente|cumprimentar|cumprimento|meio comprimento|acene|acenar|de um oi|diga oi)\b',text): return 'WAVE'
     if 'braco' in text:
         if re.search(r'\b(levante|levantar|erga|erguer|suba|subir)\b',text): return 'ARM_UP'
         if re.search(r'\b(abaixe|abaixar|baixe|baixar|desca|descer)\b',text): return 'ARM_DOWN'

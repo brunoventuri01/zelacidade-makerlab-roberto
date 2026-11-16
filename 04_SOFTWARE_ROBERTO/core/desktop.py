@@ -235,6 +235,6 @@ class DesktopRuntime:
         with self.lock:return {'title':self.config['titulo'],'state':self.state,'mic':self.mic_enabled,'speaking':self.speaking,
             'busy':self.busy,'level':self.level,'simulated':self.robot.simulation,'arm_up':self.robot.arm_up,'led_on':self.robot.led_on,'distance_cm':self.robot.last_distance,
             'health':dict(self.health),'events':[e for e in self.events if e['seq']>after],
-            'window_remaining':max(0,self.window_until-time.monotonic()),'config':{k:self.config[k] for k in ('janela_comando_segundos','voz_ativa','webcam_ativa','indice_camera')}}
+            'window_remaining':max(0,self.window_until-time.monotonic()),'config':{k:self.config.get(k) for k in ('janela_comando_segundos','voz_ativa','dispositivo_saida')}}
     def start(self):self.camera.start();self.audio.start();threading.Thread(target=self.check_llm,daemon=True).start()
     def close(self):self.audio.close();self.camera.stop.set();self.robot.close();self.pool.shutdown(wait=False,cancel_futures=True)
