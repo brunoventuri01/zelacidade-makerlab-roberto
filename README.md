@@ -125,7 +125,7 @@ Exemplos: “Roberto, levante o braço”, “Roberto, apague a luz”, “Rober
 
 ## Vídeo
 
-Adicionar aqui o link público ou o arquivo do vídeo demonstrativo de até 6 minutos antes da entrega.
+[Assista à demonstração do Roberto no YouTube](https://youtu.be/zp226N_uSEo)
 
 ## Segurança e LGPD
 

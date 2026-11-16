@@ -11,8 +11,8 @@
 - [x] README com componentes, instalação e reprodução
 - [x] Nomes e RMs de todos os integrantes
 - [x] LGPD e segurança documentadas
-- [ ] Gravar vídeo de até 6 minutos
-- [ ] Inserir link/arquivo do vídeo no README
+- [x] Gravar vídeo de até 6 minutos
+- [x] Inserir link/arquivo do vídeo no README
 - [ ] Criar ou atualizar repositório público no GitHub
 - [ ] Confirmar que o repositório não contém `.venv`, modelos pesados ou segredos
 - [ ] Abrir o link do GitHub em janela anônima
