@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="940" viewBox="-14 -20 168 180">
+<rect x="-14" y="-20" width="168" height="180" fill="#eef3f1"/>
+<text x="70" y="-8" text-anchor="middle" font-family="Segoe UI,Arial" font-size="5" font-weight="700" fill="#173f49">TAMPA FRONTAL MAKER — ROBERTO</text>
+<polygon points="140.0,51.099999999999994 136.9,51.099999999999994 136.9,29.19999999999999 140.0,29.19999999999999 140.0,0.0 109.2,0.0 109.2,3.0999999999999943 89.60000000000001,3.0999999999999943 89.60000000000001,0.0 50.4,0.0 50.4,3.0999999999999943 30.8,3.0999999999999943 30.8,0.0 0,0.0 0,29.19999999999999 3.1,29.19999999999999 3.1,51.099999999999994 0,51.099999999999994 0,94.9 3.1,94.9 3.1,116.8 0,116.8 0,146 30.8,146 30.8,142.9 50.4,142.9 50.4,146 89.60000000000001,146 89.60000000000001,142.9 109.2,142.9 109.2,146 140.0,146 140.0,116.8 136.9,116.8 136.9,94.9 140.0,94.9" fill="#d7b98a" stroke="#173f49" stroke-width="1.5"/><polygon points="103.0,34 103.0,50 37.0,50 37.0,34" fill="#eef3f1" stroke="#173f49" stroke-width="1.5"/><polygon points="46.0,82 46.0,94 43.0,94 43.0,82" fill="#eef3f1" stroke="#173f49" stroke-width="1.5"/><polygon points="94.0,94 94.0,82 97.0,82 97.0,94" fill="#eef3f1" stroke="#173f49" stroke-width="1.5"/><circle cx="32.5" cy="57.5" r="1.6" fill="#eef3f1" stroke="#173f49" stroke-width="1.5"/><circle cx="32.5" cy="26.5" r="1.6" fill="#eef3f1" stroke="#173f49" stroke-width="1.5"/><circle cx="107.5" cy="57.5" r="1.6" fill="#eef3f1" stroke="#173f49" stroke-width="1.5"/><circle cx="107.5" cy="26.5" r="1.6" fill="#eef3f1" stroke="#173f49" stroke-width="1.5"/><circle cx="57.0" cy="88" r="8.5" fill="#eef3f1" stroke="#173f49" stroke-width="1.5"/><circle cx="83.0" cy="88" r="8.5" fill="#eef3f1" stroke="#173f49" stroke-width="1.5"/><circle cx="70.0" cy="119" r="2.6" fill="#eef3f1" stroke="#173f49" stroke-width="1.5"/>
+<!-- Contornos tracejados representam os componentes atrás do MDF, não são linhas de corte. -->
+<rect x="30" y="23.75" width="80" height="36.5" fill="none" stroke="#1976a3" stroke-width="1" stroke-dasharray="3 2"/>
+<rect x="47.5" y="78" width="45" height="20" fill="none" stroke="#378b61" stroke-width="1" stroke-dasharray="3 2"/>
+<text x="70" y="19" text-anchor="middle" font-family="Segoe UI,Arial" font-size="3.5" font-weight="700" fill="#1976a3">LCD 16×2</text>
+<text x="70" y="104" text-anchor="middle" font-family="Segoe UI,Arial" font-size="3.5" font-weight="700" fill="#378b61">HC-SR04</text>
+<path d="M 91 119 L 74 119" stroke="#b23b32" stroke-width="1"/>
+<path d="M 74 119 l4 -2 l0 4 z" fill="#b23b32"/>
+<text x="93" y="121" font-family="Segoe UI,Arial" font-size="3.5" font-weight="700" fill="#b23b32">LED 5 mm</text>
+<text x="70" y="155" text-anchor="middle" font-family="Segoe UI,Arial" font-size="3.3" fill="#526b72">140 × 146 mm · MDF 3 mm · orientação frontal</text>
+</svg>

@@ -1,0 +1,10 @@
+{
+  "autodeskProduct": "Fusion360",
+  "type": "script",
+  "id": "216984f7-c825-4b64-b0b6-3487462a3fba",
+  "author": "Grupo CP5",
+  "description": {"": "Robo MDF de 300 mm: gerar modelo organizado e DXFs nominais"},
+  "version": "1.0.0",
+  "runOnStartup": false,
+  "supportedOS": "windows|mac"
+}

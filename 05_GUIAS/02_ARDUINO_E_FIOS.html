@@ -1,0 +1,232 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>02_ARDUINO_E_FIOS</title><style>body{font:16px/1.65 Segoe UI,Arial,sans-serif;margin:0;background:#f3f1ea;color:#24343b}main{max-width:1000px;margin:auto;padding:40px}h1,h2,h3{color:#154650;line-height:1.25}h1{font-size:34px}h2{margin-top:35px}a{color:#006b80}table{border-collapse:collapse;width:100%;background:white}td,th{border:1px solid #c9d2d1;padding:9px;text-align:left}pre{background:#e2e9e7;padding:18px;overflow:auto;white-space:pre-wrap}code{font-size:.9em}img{max-width:100%}.hero{padding:25px;background:#154650;border-radius:12px;color:white}.hero h1{color:white}.cards{display:grid;grid-template-columns:1fr 1fr;gap:15px}.card{background:white;border:1px solid #c9d2d1;border-radius:10px;padding:18px}.note{background:#ffebc6;padding:18px;border-left:5px solid #bd7b15}.small{font-size:14px}@media print{body{background:white}main{padding:0;max-width:none}h2,h3{break-after:avoid}table,pre{break-inside:avoid}.hero{background:white;color:#154650}.hero h1{color:#154650}}</style><main><p><a href="../ABRA_PRIMEIRO.html">← Voltar ao início do pacote</a></p><h1>Roberto — do Arduino vazio ao robô funcionando</h1>
+<p>Este guia é para <strong>Arduino Uno R3 ou Nano clássico, com ATmega328P e lógica de 5 V</strong>, um servo SG90 e um LED comum de duas pernas. Não aplique o esquema automaticamente em Uno R4, Nano ESP32, placas de 3,3 V ou outras variantes.</p>
+<h2>1. O que cada programa faz</h2>
+<table>
+<thead>
+<tr>
+<th>Arquivo ou programa</th>
+<th>Onde funciona</th>
+<th>Quando usar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>INICIAR_ROBERTO.bat</code></td>
+<td>Notebook Windows</td>
+<td>Toda vez que quiser conversar com o robô</td>
+</tr>
+<tr>
+<td>Painel no navegador</td>
+<td>Notebook Windows</td>
+<td>Ver câmera, simulação, comandos e conectar o Arduino</td>
+</tr>
+<tr>
+<td><code>GRAVAR_ARDUINO.bat</code></td>
+<td>Notebook Windows</td>
+<td>Gravar o programa na placa, normalmente só uma vez</td>
+</tr>
+<tr>
+<td><code>Roberto.ino</code></td>
+<td>Abre na Arduino IDE; é compilado para a placa</td>
+<td>Alterar ou gravar o firmware pelo método tradicional</td>
+</tr>
+<tr>
+<td>Arquivos <code>.py</code></td>
+<td>Notebook Windows</td>
+<td>Código da IA, voz, câmera, painel e comunicação</td>
+</tr>
+<tr>
+<td>Arquivos <code>.f3d</code></td>
+<td>Autodesk Fusion</td>
+<td>Inspecionar ou editar as peças mecânicas</td>
+</tr>
+<tr>
+<td>Arquivos <code>.dxf</code></td>
+<td>Programa da máquina laser</td>
+<td>Cortar as peças de MDF</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Você não grava Python nem a inteligência artificial no Arduino.</strong> O notebook ouve, interpreta e fala. O Arduino recebe comandos pelo cabo USB e controla o LED e o servo. Webcam, microfone e alto-falantes continuam no notebook; não são ligados a pinos do Arduino.</p>
+<h2>2. Materiais</h2>
+<ul>
+<li>Uno R3 ou Nano clássico ATmega328P de 5 V.</li>
+<li>Cabo USB <strong>de dados</strong>, compatível com a placa. Uno R3 costuma usar USB-B; Nano varia conforme o fabricante.</li>
+<li>Um SG90 posicional de aproximadamente 180°, com horn e parafuso originais. Não usar versão de rotação contínua para este braço.</li>
+<li>Um LED comum de 5 mm, duas pernas.</li>
+<li>Dois jumpers fêmea–macho para prolongar o LED até o Arduino, ou fios soldados e isolados.</li>
+<li>Três jumpers macho–macho para ligar o conector fêmea do servo aos soquetes do Uno. Ajuste o tipo de jumper aos conectores reais da sua placa.</li>
+<li>Isolamento para cada emenda: tubo termo-retrátil ou fita isolante apropriada. Nenhum terminal positivo pode tocar o negativo.</li>
+</ul>
+<p>Não é necessária pilha nesta opção. Toda a alimentação vem do USB. Isso é uma configuração de teste para <strong>um servo com braço leve</strong>; depende do cabo, da porta USB e do consumo real do servo. Se reiniciar, tremer ou desconectar, não considere a alimentação validada. Não segure o braço para impedir o movimento e não coloque objetos na mão.</p>
+<h2>3. LED sem resistor externo: o que muda</h2>
+<p>O firmware deste pacote foi adaptado para usar o <strong>resistor interno do ATmega328P</strong>. Assim, o LED pode ser ligado diretamente entre D6 e GND, sem comprar ou montar um resistor separado.</p>
+<p><strong>O brilho fica muito fraco.</strong> Não é equivalente a um LED alimentado normalmente: pode ser pouco visível numa sala iluminada. A documentação da Arduino informa que os pull-ups internos de placas AVR têm aproximadamente 20–50 kΩ e fornecem corrente suficiente apenas para acender um LED fracamente. Para um LED vermelho com cerca de 2 V, isso corresponde a aproximadamente 0,06–0,15 mA. É uma estimativa, não uma medição da sua placa.</p>
+<p>O código para acender usa <code>pinMode(6, INPUT_PULLUP)</code>. Para apagar usa <code>pinMode(6, INPUT)</code>. <strong>Nunca mude esse LED para <code>OUTPUT</code> e <code>HIGH</code> nesta montagem sem resistor externo.</strong> Não ligue o LED entre o pino 5V e o GND: nessa ligação o resistor interno não participa.</p>
+<p>Se o brilho for insuficiente para apresentar na faculdade, será necessário um resistor externo de 330 Ω ou um módulo que já contenha resistor, com firmware apropriado. O pacote não promete brilho normal sem limitação de corrente.</p>
+<p>Referência oficial: <a href="https://docs.arduino.cc/learn/microcontrollers/digital-pins/">Arduino — Digital Pins</a>, seção INPUT_PULLUP. O firmware ainda não foi ensaiado numa placa física, pois o Arduino não está disponível nesta etapa.</p>
+<h2>4. Grave a placa ANTES de conectar o LED e o servo</h2>
+<p>Isso evita que algum programa antigo da placa configure D6 como saída forte e danifique o LED sem resistor externo.</p>
+<ol>
+<li>Deixe <strong>todos os fios do LED e do servo desconectados</strong>. Use apenas a placa e o cabo USB.</li>
+<li>Conecte o Arduino ao notebook.</li>
+<li>No painel do Roberto, deixe <strong>MODO SIMULAÇÃO</strong>. Se estava conectado à serial, clique em “Voltar à simulação”. Feche o Monitor Serial da Arduino IDE se estiver aberto.</li>
+<li>Abra <code>03_ARDUINO/GRAVAR_ARDUINO.bat</code> na pasta da faculdade.</li>
+<li>Em “Sua placa”, escolha <strong>Arduino Uno R3</strong> ou <strong>Arduino Nano clássico</strong>, conforme a placa que você tem.</li>
+<li>Clique em “Atualizar portas”. Escolha a porta COM que apareceu ao conectar a placa. Se tiver dúvida, retire o cabo, atualize e veja qual desapareceu; reconecte e escolha a que voltou.</li>
+<li>Clique em “Gravar Roberto no Arduino” e confirme a substituição do programa da placa.</li>
+<li>Aguarde a mensagem de gravação concluída. Não desconecte durante a gravação.</li>
+<li>Em um Nano que não grava, confira o modelo e tente a opção <strong>bootloader antigo</strong>. Se nenhuma porta aparecer, confira o cabo de dados e o driver do conversor USB da placa, usando o fabricante como referência. Não instale um driver aleatório.</li>
+<li>Depois da confirmação de sucesso, <strong>retire o cabo USB</strong> antes de montar os fios.</li>
+</ol>
+<p>O gravador usa ferramentas oficiais da Arduino e firmware pré-compilado, incluídos no pacote. Ele não apaga o notebook nem precisa enviar seu projeto à internet. A gravação física ainda deve ser testada com a placa real.</p>
+<h3>Alternativa: pela Arduino IDE</h3>
+<ol>
+<li>Instale a <a href="https://www.arduino.cc/en/software">Arduino IDE oficial</a>.</li>
+<li>Abra <code>03_ARDUINO/Firmware/Roberto/Roberto.ino</code>. Mantenha o arquivo dentro da pasta chamada <code>Roberto</code>.</li>
+<li>No Gerenciador de Placas, instale <strong>Arduino AVR Boards</strong>. No Gerenciador de Bibliotecas, instale <strong>Servo</strong>, da Arduino.</li>
+<li>Selecione <strong>Arduino Uno</strong>, ou <strong>Arduino Nano clássico</strong>, no seletor de placa. Não escolha Uno WiFi Rev2 ou outra família.</li>
+<li>Selecione a porta COM correspondente.</li>
+<li>Clique no botão de <strong>Verificar</strong> (símbolo de check). Isso compila, sem gravar.</li>
+<li>Clique na seta <strong>Carregar/Upload</strong>. Aguarde a conclusão.</li>
+<li>Feche o Monitor Serial antes de conectar a aplicação Roberto à mesma porta.</li>
+</ol>
+<p>Guia oficial: <a href="https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-uploading-a-sketch/">Carregar um sketch com Arduino IDE 2</a>.</p>
+<p><img src="ESQUEMA_FIOS.svg" alt="Esquema dos cinco fios e do USB, com LED limitado pelo resistor interno"></p><h2>5. Ligue os fios com o USB DESCONECTADO</h2>
+<p>Use as inscrições impressas na placa, não uma posição estimada pela fotografia. Há mais de um GND; eles são interligados e você pode usar um para o servo e outro para o LED.</p>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Identificação</th>
+<th>Arduino</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Servo SG90</td>
+<td>Vermelho: positivo</td>
+<td><strong>5V</strong>, no grupo POWER</td>
+</tr>
+<tr>
+<td>Servo SG90</td>
+<td>Marrom ou preto: negativo</td>
+<td><strong>GND</strong></td>
+</tr>
+<tr>
+<td>Servo SG90</td>
+<td>Laranja, amarelo ou branco: sinal</td>
+<td><strong>D9</strong>, no grupo DIGITAL</td>
+</tr>
+<tr>
+<td>LED</td>
+<td>Perna longa: positivo/anodo</td>
+<td><strong>D6</strong>, via um fio, sem resistor externo nesta versão INPUT_PULLUP</td>
+</tr>
+<tr>
+<td>LED</td>
+<td>Perna curta: negativo/catodo</td>
+<td><strong>GND</strong>, via outro fio</td>
+</tr>
+<tr>
+<td>Notebook</td>
+<td>Cabo USB de dados</td>
+<td>Conector USB da placa</td>
+</tr>
+</tbody>
+</table>
+<p>As cores do SG90 são usuais, mas confira seu modelo. <strong>Nunca ligue o vermelho do servo ao D9</strong>, nem ao 3.3V ou VIN. D9 só envia o sinal de comando. Não junte 5V com GND.</p>
+<p>Se as pernas do LED foram cortadas, o lado achatado do encapsulamento geralmente marca o catodo/negativo. Se ainda houver dúvida, confira com o vendedor ou um multímetro na função de diodo antes de ligar. Não inverta por tentativa repetida com alimentação ligada.</p>
+<pre><code class="language-text">NOTEBOOK ── cabo USB de dados ── ARDUINO UNO R3 / NANO CLÁSSICO 5 V
+                                    │
+                                    ├── 5V ───────── SG90 vermelho
+                                    ├── GND ──────── SG90 marrom/preto
+                                    ├── D9 ───────── SG90 laranja/amarelo (sinal)
+                                    │
+                                    ├── D6 ───────── LED perna longa (+)
+                                    └── GND ──────── LED perna curta (−)
+
+LED: D6 usa INPUT_PULLUP, com resistor INTERNO. Brilho muito fraco.
+Não usar D6 OUTPUT/HIGH e não ligar o LED diretamente ao 5V.
+</code></pre>
+<p>Para o LED no peito, prolongue as duas pernas com cerca de 20 cm de fio. Um jumper fêmea pode encaixar em cada perna se ficar firme; para a montagem definitiva, prefira solda e isolamento individual. Prenda os fios internamente, deixando uma pequena folga, para não puxar o LED.</p>
+<h2>6. Primeiro teste elétrico: sem prender o braço no servo</h2>
+<ol>
+<li>Mantenha o servo sem o braço de MDF acoplado, apoiado numa superfície estável.</li>
+<li>Confira os cinco fios na tabela, inclusive polaridade e pinos 5V/D6/D9.</li>
+<li>Conecte o USB ao notebook. O servo pode ir à posição inicial de 90° ao energizar; por isso o braço deve estar solto nessa etapa.</li>
+<li>Abra <code>INICIAR_ROBERTO.bat</code> na raiz da pasta da faculdade.</li>
+<li>Aguarde o painel abrir e os recursos locais carregarem.</li>
+<li>Abra a seção “Arduino por USB” no painel, clique em “Atualizar portas”, selecione a COM correta e clique em “Conectar Arduino”.</li>
+<li>O indicador muda para <strong>ARDUINO CONECTADO</strong>. Isso confirma a abertura da porta; o sucesso de cada comando só é informado depois do ACK do firmware.</li>
+<li>Teste pelo botão “Acender luz”. O LED deverá acender <strong>fracamente</strong>. Em seguida teste “Apagar luz”.</li>
+<li>Teste “Levantar braço” e “Abaixar braço”. O eixo do servo deve mudar entre as posições conservadoras do firmware, sem peso acoplado.</li>
+<li>Só depois teste por voz: “Roberto, levante o braço”. Aguarde terminar a resposta antes de dar o próximo comando.</li>
+</ol>
+<p>Se aparecer que o Arduino não confirmou, não suponha que nada se moveu: o comando pode ter sido aplicado e a resposta perdida. Confira placa, firmware, COM e conexão antes de repetir. Não há sensor de posição no braço.</p>
+<h2>7. Acoplar o braço e calibrar</h2>
+<ol>
+<li>Desconecte o USB.</li>
+<li>Confira o suporte do SG90 e a posição do horn. Os furos do projeto mecânico são preliminares e precisam coincidir com seu servo e horn reais.</li>
+<li>Para posicionar o servo, energize-o ainda sem braço e use “Abaixar braço”; depois desligue novamente.</li>
+<li>Prenda o horn original ao braço de MDF com os dois pequenos parafusos compatíveis, sem rachar a placa.</li>
+<li>Encaixe o horn no eixo estriado na posição desejada e use o <strong>parafuso central original do servo</strong>. Não force o eixo girando-o à mão.</li>
+<li>Reconecte o USB e teste um movimento pequeno. Não deixe o braço bater no corpo.</li>
+<li>O firmware usa <code>ANGULO_BAIXO=90</code> e <code>ANGULO_ALTO=45</code>. Esses valores não são universais: dependem da montagem. Se precisar alterá-los, edite o <code>.ino</code> na Arduino IDE e grave novamente. O gravador simplificado usa os <code>.hex</code> já compilados e não recompila suas edições.</li>
+<li>Se quiser levar a versão alterada à faculdade, exporte novamente o firmware compilado ou use a Arduino IDE para gravar a sua edição.</li>
+</ol>
+<h2>8. Uso normal na apresentação</h2>
+<p>Depois de gravar e validar o hardware, não é necessário abrir a Arduino IDE a cada uso. Conecte o USB, inicie o Roberto pelo BAT e conecte a COM pelo painel. A IA continua rodando no notebook; a placa recebe apenas os comandos.</p>
+<p>Para voltar à demonstração sem placa, clique em <strong>Voltar à simulação</strong>. A ação ficará identificada como simulada. Ao iniciar novamente o programa, a configuração distribuída começa em simulação.</p>
+<h2>9. Se não funcionar</h2>
+<table>
+<thead>
+<tr>
+<th>Sintoma</th>
+<th>O que conferir</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nenhuma porta COM</td>
+<td>Cabo precisa transmitir dados; confira placa e driver</td>
+</tr>
+<tr>
+<td>Falha ao gravar</td>
+<td>Placa certa, COM certa, Monitor Serial fechado e painel sem conexão à COM</td>
+</tr>
+<tr>
+<td>Nano não grava</td>
+<td>Verifique a opção de bootloader antigo</td>
+</tr>
+<tr>
+<td>LED apagado</td>
+<td>Polaridade, D6/GND, firmware correto; o brilho com pull-up é muito fraco</td>
+</tr>
+<tr>
+<td>LED fraco</td>
+<td>É esperado sem resistor externo nesta configuração; para brilho normal, mude o circuito de forma apropriada</td>
+</tr>
+<tr>
+<td>Servo não mexe</td>
+<td>Vermelho 5V, negativo GND, sinal D9; firmware e ACK</td>
+</tr>
+<tr>
+<td>Arduino reinicia ou USB cai</td>
+<td>Cabo/porta/alimentação não sustentaram o servo; tire carga e não force o motor</td>
+</tr>
+<tr>
+<td>Porta ocupada</td>
+<td>Feche Monitor Serial ou outro programa conectado à COM</td>
+</tr>
+<tr>
+<td>Nome não reconhecido</td>
+<td>Fale perto do microfone padrão e espere o Roberto terminar a resposta</td>
+</tr>
+<tr>
+<td>Câmera sem imagem</td>
+<td>Feche aplicativos que usam a webcam e confira o índice no painel</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pendente físico:</strong> upload real, brilho do LED com pull-up, corrente do servo pelo USB, curso e encaixe do horn. A compilação e testes em software não substituem essas verificações.</p></main></html>

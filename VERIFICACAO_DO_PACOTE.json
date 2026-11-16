@@ -1,0 +1,68 @@
+{
+  "arquivos_essenciais": {
+    "ABRA_PRIMEIRO.html": {
+      "bytes": 4480,
+      "sha256": "3acb5630be84674037529cd68ba14e8b558139f87ba237229a4bcfd3f2ea9cba"
+    },
+    "INICIAR_ROBERTO.bat": {
+      "bytes": 64,
+      "sha256": "6d50cddbcc8d79e6b0c94d7fa7090b6806a623dd6ebb37eb5c8577b188a9d751"
+    },
+    "01_FUSION/ROBERTO_MONTADO.f3d": {
+      "bytes": 935153,
+      "sha256": "986d50c100f762ba9d92b46021fc39cda594e65d3a3215139a3138f724592784"
+    },
+    "01_FUSION/ROBERTO_PECAS_ESPALHADAS.f3d": {
+      "bytes": 971391,
+      "sha256": "21e3a40d0cfa10f29a4667a2bc8ca1c4364d0260699da4952b197d84a7c6c629"
+    },
+    "02_CORTE_LASER/ROBERTO_40_PECAS_NOMINAL.dxf": {
+      "bytes": 22318,
+      "sha256": "7ce559dc732a93e12d5b430a3569f32d684e4ce0991a554ef58f639d45edebb4"
+    },
+    "03_ARDUINO/Firmware/Roberto/Roberto.ino": {
+      "bytes": 1998,
+      "sha256": "b54e661d8c37d9dbef42413f12baba2576642f4c1a9ee526323b800d427e109b"
+    },
+    "03_ARDUINO/GRAVAR_ARDUINO.bat": {
+      "bytes": 66,
+      "sha256": "ae5937daeac386fd3d4b8f48efaba217df13c6e8b30c34990108868bddb634e5"
+    },
+    "05_GUIAS/01_MONTAGEM_MDF.html": {
+      "bytes": 17170,
+      "sha256": "f0855a210c64193ee67c90fb12e263e3af3f3f340a888fbaf6967ecd07190041"
+    },
+    "05_GUIAS/02_ARDUINO_E_FIOS.html": {
+      "bytes": 16148,
+      "sha256": "c005e90e7cd43c1d244e34653c81e686706726ddde470040f958df50acb5d4bb"
+    },
+    "05_GUIAS/ESQUEMA_FIOS.svg": {
+      "bytes": 2294,
+      "sha256": "b4aee060f7adf133acace7e3656683b55214d7303420a302052560283c188d15"
+    },
+    "04_SOFTWARE_ROBERTO/python/python.exe": {
+      "bytes": 107312,
+      "sha256": "73dbf1f40507275d6fa636b49eb80b4753e313f649f52591abba86b31f1a1bce"
+    },
+    "04_SOFTWARE_ROBERTO/models/whisper-small/model.bin": {
+      "bytes": 483546902,
+      "sha256": "3e305921506d8872816023e4c273e75d2419fb89b24da97b4fe7bce14170d671"
+    },
+    "04_SOFTWARE_ROBERTO/models/piper/pt_BR-cadu-medium.onnx": {
+      "bytes": 62950044,
+      "sha256": "765f0809a6ea9035d4a6d0d008dbf8876e68b2dd32029312672fa8f405bdb535"
+    },
+    "04_SOFTWARE_ROBERTO/runtime/ollama/ollama.exe": {
+      "bytes": 38019464,
+      "sha256": "cc00918e2d25577969c929a1004be054781b8bff25819c1be19ca2f7b7bb4012"
+    },
+    "04_SOFTWARE_ROBERTO/runtime/arduino-cli/arduino-cli.exe": {
+      "bytes": 37731328,
+      "sha256": "1017de89179c3167e6b8a38ca6cc4091fa69a3cf97aafa7810f01423003f5571"
+    }
+  },
+  "pecas_robo": 40,
+  "corpos_prova": 2,
+  "modo_inicial": "simulacao",
+  "dados_pessoais_excluidos": true
+}

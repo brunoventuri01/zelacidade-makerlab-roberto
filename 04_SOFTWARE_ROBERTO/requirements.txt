@@ -1,0 +1,43 @@
+# ---------------------------------------------------------------------------
+# Roberto — dependências
+# Testado com Python 3.11 (3.13+ ainda quebra wheels de PyAudio/OpenCV).
+#   pip install -r requirements.txt
+# ---------------------------------------------------------------------------
+
+# Captura de áudio e reconhecimento de fala (STT)
+SpeechRecognition>=3.10,<4.0
+PyAudio>=0.2.14            # Linux: instale o portaudio19-dev ANTES (veja o README)
+
+# Síntese de voz (TTS) — offline, sem latência de rede
+pyttsx3>=2.90
+
+# Visão computacional: precisa ser o pacote *contrib* por causa do cv2.face
+# As wheels são "cp37-abi3", então funcionam em qualquer Python 3.7+ (inclusive 3.14).
+opencv-contrib-python>=4.10,<5.0
+# Sem teto de versão: numpy 1.x não tem wheel para Python 3.13+, e o OpenCV
+# 4.10+ já é compatível com o numpy 2. Deixe o pip escolher conforme a sua versão.
+numpy>=1.26
+
+# IA generativa (item 9) e Whisper via API
+openai>=1.40
+
+# Configuração fora do repositório (o GitHub é público!)
+python-dotenv>=1.0
+
+# APIs dos comandos extras (cotação e previsão do tempo)
+requests>=2.31
+
+# Captura de tela
+mss>=9.0
+
+# Painel Windows e modelos locais do Roberto
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
+faster-whisper>=1.2,<2
+sounddevice>=0.5,<1
+webrtcvad-wheels>=2.0.14,<3
+pyserial>=3.5,<4
+httpx>=0.28,<1
+piper-tts>=1.3,<2
+# PyAV 19 removeu metadata_errors, ainda usado pelo faster-whisper 1.2.
+av>=14,<17

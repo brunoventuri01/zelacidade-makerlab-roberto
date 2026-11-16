@@ -1,0 +1,3 @@
+Tamanho dos arquivos: 6.63 GiB
+Use pendrive de pelo menos 16 GB, com espaco livre suficiente.
+Leve a pasta inteira, incluindo os modelos e Python.

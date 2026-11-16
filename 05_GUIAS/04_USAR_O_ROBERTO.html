@@ -1,0 +1,107 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>04_USAR_O_ROBERTO</title><style>body{font:16px/1.65 Segoe UI,Arial,sans-serif;margin:0;background:#f3f1ea;color:#24343b}main{max-width:1000px;margin:auto;padding:40px}h1,h2,h3{color:#154650;line-height:1.25}h1{font-size:34px}h2{margin-top:35px}a{color:#006b80}table{border-collapse:collapse;width:100%;background:white}td,th{border:1px solid #c9d2d1;padding:9px;text-align:left}pre{background:#e2e9e7;padding:18px;overflow:auto;white-space:pre-wrap}code{font-size:.9em}img{max-width:100%}.hero{padding:25px;background:#154650;border-radius:12px;color:white}.hero h1{color:white}.cards{display:grid;grid-template-columns:1fr 1fr;gap:15px}.card{background:white;border:1px solid #c9d2d1;border-radius:10px;padding:18px}.note{background:#ffebc6;padding:18px;border-left:5px solid #bd7b15}.small{font-size:14px}@media print{body{background:white}main{padding:0;max-width:none}h2,h3{break-after:avoid}table,pre{break-inside:avoid}.hero{background:white;color:#154650}.hero h1{color:#154650}}</style><main><p><a href="../ABRA_PRIMEIRO.html">← Voltar ao início do pacote</a></p><h1>ROBERTO | ROBÔ INTELIGENTE CP5</h1>
+<p>Aplicação local baseada em https://github.com/jzampieri/cp_04_iot . A base de habilidades foi preservada e atualizada para Roberto. As alterações estão nesta cópia local; nada foi enviado ao GitHub.</p>
+<h2>Iniciar e testar</h2>
+<p>Dê dois cliques em <strong>INICIAR_ROBERTO.bat</strong>. Há um atalho desse arquivo também na pasta superior <code>CP6 e GS makerlab</code>. O inicializador sobe a IA local e o painel automaticamente e abre o navegador em http://127.0.0.1:8765 . Executar novamente reabre o painel existente, sem criar outra instância.</p>
+<p>O modo inicial é <strong>SIMULAÇÃO</strong>, sem Arduino. Microfone e câmera iniciam automaticamente. O painel informa quando o Whisper terminou de carregar e a IA está disponível. O primeiro carregamento da IA pode demorar cerca de um minuto neste computador; respostas seguintes são bem mais rápidas.</p>
+<p>Experimente uma frase por vez e aguarde terminar a resposta:</p>
+<ul>
+<li>Roberto, levante o braço.</li>
+<li>Roberto, abaixe o braço.</li>
+<li>Roberto, acenda a luz.</li>
+<li>Roberto, apague a luz.</li>
+<li>Roberto, me cumprimente.</li>
+<li>Roberto, qual é o seu nome?</li>
+<li>Roberto, quem criou você?</li>
+<li>Roberto, o que você está vendo?</li>
+<li>Roberto, me explique o que é inteligência artificial.</li>
+<li>Roberto, calcular dois mais três.</li>
+<li>Roberto, que horas são?</li>
+<li>Roberto, cadastrar evento na agenda.</li>
+</ul>
+<p>Também funciona dizer somente <strong>“Roberto!”</strong>, aguardar <strong>“Oi, estou ouvindo!”</strong>, e dar um comando nos sete segundos seguintes. Esse tempo começa depois da resposta falada, e é configurável no painel entre 2 e 30 segundos. Pequenas pausas na mesma frase são aceitas pelo detector; se uma pausa separar a chamada do comando, a janela atende à continuação. Depois de executar o pedido, o nome volta a ser obrigatório, exceto quando uma habilidade pede uma resposta, como agenda e cadastro facial.</p>
+<p>Use <strong>Pausar microfone</strong> para parar a captura. O texto e os botões continuam disponíveis. Durante a fala do Roberto o áudio de entrada é descartado e a fila é esvaziada; espere terminar a resposta para falar. Não há interrupção de fala por voz nesta revisão.</p>
+<p>Use <strong>Encerrar Roberto</strong> no painel para parar a aplicação e liberar câmera/microfone. Fechar a aba do navegador não encerra o processo. O motor local de IA pode continuar em segundo plano, com o modelo descarregado após 20 minutos de inatividade.</p>
+<h2>Recursos locais</h2>
+<table>
+<thead>
+<tr>
+<th>Recurso</th>
+<th>Implementação</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Detecção de fala</td>
+<td>WebRTC VAD com filtro de energia e final de fala de 1 segundo</td>
+</tr>
+<tr>
+<td>Transcrição</td>
+<td>Whisper small multilíngue via faster-whisper, idioma português, CPU INT8</td>
+</tr>
+<tr>
+<td>Palavra de ativação</td>
+<td>Token exato “Roberto”, com saudações curtas opcionais; sem aliases fonéticos</td>
+</tr>
+<tr>
+<td>IA e interpretação de webcam</td>
+<td>Gemma 3 4B, Ollama local, GPU NVIDIA quando disponível</td>
+</tr>
+<tr>
+<td>Voz padrão</td>
+<td>Piper Cadu medium, masculina, português brasileiro, aprovada no teste auditivo do usuário</td>
+</tr>
+<tr>
+<td>Painel</td>
+<td>FastAPI em 127.0.0.1:8765; somente acesso local</td>
+</tr>
+<tr>
+<td>IA local</td>
+<td>Ollama portátil em 127.0.0.1:11435, modelos guardados nesta pasta</td>
+</tr>
+<tr>
+<td>Arduino</td>
+<td>Serial USB, comandos com identificador e confirmação correspondente</td>
+</tr>
+</tbody>
+</table>
+<p>Não é um detector dedicado de wake word: o áudio passa pelo VAD e pelo reconhecedor, e só depois o nome é verificado. Não há exigência de entonação, mas ruído, distância e erros de transcrição ainda podem afetar a precisão. O prompt da transcrição não sugere “Roberto”, para reduzir confusão com “Roberta”.</p>
+<p>Nenhum áudio ou imagem é enviado para APIs externas no modo local. A webcam usa a imagem em memória para a análise pedida. A escuta cotidiana não grava arquivos de áudio. O histórico de conversa fica em memória. Os ensaios automáticos deixaram frases sintetizadas em <code>data/testes_audio</code>, sem gravações de fala humana.</p>
+<p><strong>Clima, cotação, buscas e YouTube</strong> preservam as integrações anteriores e precisam de internet. As funções de reconhecimento de fala, nome, diálogo com a IA, análise de imagem, voz, agenda, calculadora e simulação funcionam com os modelos já instalados, sem APIs de nuvem.</p>
+<h2>Dispositivos deste computador</h2>
+<p>Na configuração realizada, o Windows apresentou <strong>HyperX QuadCast</strong> como microfone padrão e <strong>JBL Quantum 950</strong> como saída padrão. A câmera de índice 0 abriu corretamente em 640 × 480. O aplicativo usa os padrões locais, sem mudar configurações globais do Windows. Em outro notebook, usará os dispositivos desse notebook. O painel permite alterar o índice da webcam.</p>
+<p>Se precisar escolher um microfone específico, altere <code>dispositivo_microfone</code> em <code>config_roberto.json</code> para o índice PortAudio desejado e reinicie o Roberto. O campo <code>dispositivo_saida</code> aceita índice ou nome de dispositivo do sounddevice para a voz Piper. Nomes completos são preferíveis a índices, que podem mudar ao conectar acessórios. <code>null</code> usa o padrão.</p>
+<h2>Configuração</h2>
+<p><code>config_roberto.json</code> contém nome, título, intervalo da janela, modo de simulação, câmera, modelo de voz e endereços locais. O botão de configurações salva janela, voz ligada/desligada e câmera. O arquivo <code>.env</code> configura os caminhos legados de LLM, STT e TTS; não contém nenhuma chave de API nesta instalação.</p>
+<p>O motor padrão é <code>piper</code>, com <code>modelo_voz=models/piper/pt_BR-cadu-medium.onnx</code> e <code>ritmo_voz=1.0</code>. A voz inicial do Windows e a voz Piper Faber foram substituídas após avaliação auditiva; os modelos Faber e Jeff baixados para comparação não são usados pela aplicação.</p>
+<p>Modelos e ambiente virtual estão em <code>.gitignore</code>. Não inclua os vários GB de modelos em um commit. A pasta <code>.venv</code> pertence a este computador e não é portátil: em outra máquina, recrie-a e instale as dependências. O projeto tem 32 GB de RAM e foi testado aqui com RTX 4060 Ti de 8 GB; em máquinas menores, o desempenho muda.</p>
+<h2>Recriar o ambiente em outro Windows</h2>
+<p>Com Python 3.12 instalado, na pasta do projeto:</p>
+<pre><code class="language-powershell">python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe tools/preparar_local.py all
+</code></pre>
+<p>O script baixa Ollama portátil, Whisper small e a voz Cadu. Na primeira configuração, baixe também a IA com o Ollama usando o diretório local de modelos:</p>
+<pre><code class="language-powershell">$env:OLLAMA_HOST='127.0.0.1:11435'
+$env:OLLAMA_MODELS=Join-Path (Get-Location) 'models\ollama'
+.\runtime\ollama\ollama.exe serve
+</code></pre>
+<p>Em outra janela PowerShell, com a mesma variável OLLAMA_HOST:</p>
+<pre><code class="language-powershell">$env:OLLAMA_HOST='127.0.0.1:11435'
+.\runtime\ollama\ollama.exe pull gemma3:4b
+</code></pre>
+<p>Depois disso, use o arquivo BAT normalmente. Estes passos <strong>já foram executados neste computador</strong>; não precisam ser repetidos agora. O arquivo <code>requirements-local.lock.txt</code>, ignorado no Git, registra as versões instaladas. PyAV está limitado a versões anteriores a 17 porque a versão 19 removeu um argumento ainda usado pelo faster-whisper 1.2.</p>
+<h2>Arduino — etapa futura</h2>
+<p>O firmware está em <code>firmware/Roberto/Roberto.ino</code>, para Uno R3/Nano clássico ATmega328P de 5 V. Servo: sinal D9, positivo 5V, negativo GND. Conforme solicitado, o LED fica entre D6 (+) e GND (-), <strong>sem resistor externo</strong>, limitado pelo resistor interno via <code>INPUT_PULLUP</code>: o brilho será muito fraco e pode não servir para uma apresentação iluminada. D6 nunca deve ser configurado como OUTPUT/HIGH nessa montagem. Para brilho normal, é necessário resistor externo ou módulo com resistor integrado. A opção solicitada usa USB como única alimentação; a corrente do SG90 deve ser validada sob carga. Se houver reinicializações, o conjunto não está sustentando o motor nessa alimentação. Não foi testado sem Arduino físico disponível.</p>
+<p>Calibre os ângulos do servo <strong>sem o braço instalado</strong> antes de usar no robô. O firmware usa inicialmente um curso conservador de 45° e movimento gradual. A montagem e o sentido real podem exigir alteração de <code>ANGULO_BAIXO</code> e <code>ANGULO_ALTO</code>.</p>
+<p>Após gravar o firmware, conecte a porta no painel. São enviados <code>ARM_UP</code>, <code>ARM_DOWN</code>, <code>LED_ON</code>, <code>LED_OFF</code> e <code>WAVE</code> em JSON por linha, com <code>id</code>. O firmware retorna esse mesmo <code>id</code> e <code>ok</code> depois de aplicar o comando. Sem ACK não há confirmação falada de sucesso; a ação pode ter ocorrido sem resposta. ACK confirma o programa do Arduino, <strong>não a posição física</strong>, pois não há sensor.</p>
+<h2>Funções preservadas</h2>
+<p>Continuam no repositório e são acessíveis pelo roteador: agenda, data/hora, calculadora, cadastro e reconhecimento facial LBPH, clima, cotação, jogo da velha, captura de tela, volume e navegação. As habilidades faciais usam a imagem compartilhada do próprio painel, sem abrir outra janela ou disputar a câmera. O reconhecimento facial depende de cadastro/treino com pessoas reais; o painel não cadastra ninguém automaticamente.</p>
+<p><code>main.py</code> continua oferecendo o modo de terminal anterior (<code>--texto</code>, <code>--sem-voz</code>, etc.), agora com nome Roberto e opções locais. O ponto de entrada recomendado para o uso solicitado é <strong>INICIAR_ROBERTO.bat</strong>, que abre o painel e inclui os comandos físicos/simulação e a janela de ativação.</p>
+<h2>Testes e diagnóstico</h2>
+<ul>
+<li><code>python -m pytest -q</code>: testes automatizados de roteamento, janela, bloqueio de própria fala, simulação, agenda/calculadora e confirmação serial com transporte simulado.</li>
+<li><code>python tools/teste_local_real.py</code>: usa microfone real, voz local, arquivos sintetizados para STT, IA local e webcam. Rode com o painel encerrado, para não disputar microfone/câmera.</li>
+<li><code>data/diagnostico_local.json</code>: resultados detalhados da última execução. A revisão de um teste pode manter uma falha antiga nesse arquivo; consulte também <code>TESTES_ROBERTO.md</code>.</li>
+<li><code>data/logs/painel.log</code> e <code>data/logs/roberto.log</code>: diagnóstico do aplicativo. Falas comuns não são registradas em texto nos logs; as últimas falas aceitas aparecem no painel durante a sessão.</li>
+</ul>
+<p>Referências: <a href="https://github.com/jzampieri/cp_04_iot">repositório de origem</a>, <a href="https://github.com/SYSTRAN/faster-whisper">faster-whisper</a>, <a href="https://github.com/OHF-Voice/piper1-gpl">Piper</a>, <a href="https://huggingface.co/rhasspy/piper-voices/tree/main/pt/pt_BR/cadu/medium">modelo de voz Cadu</a>, <a href="https://ollama.com/library/gemma3">Gemma 3</a>.</p></main></html>

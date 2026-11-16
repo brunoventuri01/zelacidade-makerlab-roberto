@@ -1,0 +1,16 @@
+{
+  "mdf": 3.0,
+  "folga": 0.10,
+  "kerf_estimado": 0.15,
+  "corpo_largura": 140.0,
+  "corpo_profundidade": 95.0,
+  "corpo_altura": 146.0,
+  "cabeca": 100.0,
+  "perna_altura": 38.0,
+  "pescoco_altura": 10.0,
+  "braco_comprimento": 100.0,
+  "servo_abertura_largura": 23.5,
+  "servo_abertura_altura": 12.8,
+  "servo_furos_distancia": 28.0,
+  "angulo_braco_graus": 0.0
+}

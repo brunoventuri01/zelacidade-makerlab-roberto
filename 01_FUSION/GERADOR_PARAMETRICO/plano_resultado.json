@@ -1,0 +1,301 @@
+{
+  "pecas": 42,
+  "largura_virtual_mm": 886.0,
+  "altura_virtual_mm": 385.0,
+  "posicoes": [
+    {
+      "id": "C_DIR",
+      "x_mm": 0,
+      "y_mm": 0,
+      "largura_mm": 95.0,
+      "altura_mm": 146.0
+    },
+    {
+      "id": "C_ESQ",
+      "x_mm": 105.0,
+      "y_mm": 0,
+      "largura_mm": 95.0,
+      "altura_mm": 146.0
+    },
+    {
+      "id": "C_FRENTE",
+      "x_mm": 210.0,
+      "y_mm": 0,
+      "largura_mm": 140.0,
+      "altura_mm": 146.0
+    },
+    {
+      "id": "C_TRAS",
+      "x_mm": 360.0,
+      "y_mm": 0,
+      "largura_mm": 140.0,
+      "altura_mm": 146.0
+    },
+    {
+      "id": "P_D1",
+      "x_mm": 510.0,
+      "y_mm": 0,
+      "largura_mm": 58,
+      "altura_mm": 120.0
+    },
+    {
+      "id": "P_D2",
+      "x_mm": 578.0,
+      "y_mm": 0,
+      "largura_mm": 58,
+      "altura_mm": 120.0
+    },
+    {
+      "id": "P_E1",
+      "x_mm": 646.0,
+      "y_mm": 0,
+      "largura_mm": 58,
+      "altura_mm": 120.0
+    },
+    {
+      "id": "P_E2",
+      "x_mm": 714.0,
+      "y_mm": 0,
+      "largura_mm": 58,
+      "altura_mm": 120.0
+    },
+    {
+      "id": "A_D_MOVEL",
+      "x_mm": 782.0,
+      "y_mm": 0,
+      "largura_mm": 30,
+      "altura_mm": 112.0
+    },
+    {
+      "id": "A_E_FIXO",
+      "x_mm": 822.0,
+      "y_mm": 0,
+      "largura_mm": 30,
+      "altura_mm": 112.0
+    },
+    {
+      "id": "H_BASE",
+      "x_mm": 0,
+      "y_mm": 156.0,
+      "largura_mm": 100.0,
+      "altura_mm": 100.0
+    },
+    {
+      "id": "H_DIR",
+      "x_mm": 110.0,
+      "y_mm": 156.0,
+      "largura_mm": 100.0,
+      "altura_mm": 100.0
+    },
+    {
+      "id": "H_ESQ",
+      "x_mm": 220.0,
+      "y_mm": 156.0,
+      "largura_mm": 100.0,
+      "altura_mm": 100.0
+    },
+    {
+      "id": "H_FRENTE",
+      "x_mm": 330.0,
+      "y_mm": 156.0,
+      "largura_mm": 100.0,
+      "altura_mm": 100.0
+    },
+    {
+      "id": "H_TOPO",
+      "x_mm": 440.0,
+      "y_mm": 156.0,
+      "largura_mm": 100.0,
+      "altura_mm": 100.0
+    },
+    {
+      "id": "H_TRAS",
+      "x_mm": 550.0,
+      "y_mm": 156.0,
+      "largura_mm": 100.0,
+      "altura_mm": 100.0
+    },
+    {
+      "id": "C_BASE",
+      "x_mm": 660.0,
+      "y_mm": 156.0,
+      "largura_mm": 140.0,
+      "altura_mm": 95.0
+    },
+    {
+      "id": "C_TOPO",
+      "x_mm": 0,
+      "y_mm": 266.0,
+      "largura_mm": 140.0,
+      "altura_mm": 95.0
+    },
+    {
+      "id": "I_APOIO00",
+      "x_mm": 150.0,
+      "y_mm": 266.0,
+      "largura_mm": 3,
+      "altura_mm": 70
+    },
+    {
+      "id": "I_APOIO01",
+      "x_mm": 163.0,
+      "y_mm": 266.0,
+      "largura_mm": 3,
+      "altura_mm": 70
+    },
+    {
+      "id": "I_APOIO02",
+      "x_mm": 176.0,
+      "y_mm": 266.0,
+      "largura_mm": 3,
+      "altura_mm": 70
+    },
+    {
+      "id": "I_APOIO10",
+      "x_mm": 189.0,
+      "y_mm": 266.0,
+      "largura_mm": 3,
+      "altura_mm": 70
+    },
+    {
+      "id": "I_APOIO11",
+      "x_mm": 202.0,
+      "y_mm": 266.0,
+      "largura_mm": 3,
+      "altura_mm": 70
+    },
+    {
+      "id": "I_APOIO12",
+      "x_mm": 215.0,
+      "y_mm": 266.0,
+      "largura_mm": 3,
+      "altura_mm": 70
+    },
+    {
+      "id": "I_BANDEJA",
+      "x_mm": 228.0,
+      "y_mm": 266.0,
+      "largura_mm": 100,
+      "altura_mm": 70
+    },
+    {
+      "id": "L_D1",
+      "x_mm": 338.0,
+      "y_mm": 266.0,
+      "largura_mm": 32,
+      "altura_mm": 44.0
+    },
+    {
+      "id": "L_D2",
+      "x_mm": 380.0,
+      "y_mm": 266.0,
+      "largura_mm": 32,
+      "altura_mm": 44.0
+    },
+    {
+      "id": "L_E1",
+      "x_mm": 422.0,
+      "y_mm": 266.0,
+      "largura_mm": 32,
+      "altura_mm": 44.0
+    },
+    {
+      "id": "L_E2",
+      "x_mm": 464.0,
+      "y_mm": 266.0,
+      "largura_mm": 32,
+      "altura_mm": 44.0
+    },
+    {
+      "id": "TESTE_FEMEA",
+      "x_mm": 506.0,
+      "y_mm": 266.0,
+      "largura_mm": 100,
+      "altura_mm": 32
+    },
+    {
+      "id": "A_E_ESP",
+      "x_mm": 616.0,
+      "y_mm": 266.0,
+      "largura_mm": 16,
+      "altura_mm": 30
+    },
+    {
+      "id": "S_REFORCO",
+      "x_mm": 642.0,
+      "y_mm": 266.0,
+      "largura_mm": 44,
+      "altura_mm": 28
+    },
+    {
+      "id": "TESTE_MACHO",
+      "x_mm": 696.0,
+      "y_mm": 266.0,
+      "largura_mm": 20,
+      "altura_mm": 25
+    },
+    {
+      "id": "N_PESCOCO",
+      "x_mm": 726.0,
+      "y_mm": 266.0,
+      "largura_mm": 40,
+      "altura_mm": 16.0
+    },
+    {
+      "id": "T_CAPA_00",
+      "x_mm": 776.0,
+      "y_mm": 266.0,
+      "largura_mm": 14,
+      "altura_mm": 14
+    },
+    {
+      "id": "T_CAPA_01",
+      "x_mm": 800.0,
+      "y_mm": 266.0,
+      "largura_mm": 14,
+      "altura_mm": 14
+    },
+    {
+      "id": "T_CAPA_10",
+      "x_mm": 824.0,
+      "y_mm": 266.0,
+      "largura_mm": 14,
+      "altura_mm": 14
+    },
+    {
+      "id": "T_CAPA_11",
+      "x_mm": 848.0,
+      "y_mm": 266.0,
+      "largura_mm": 14,
+      "altura_mm": 14
+    },
+    {
+      "id": "T_PORCA_00",
+      "x_mm": 872.0,
+      "y_mm": 266.0,
+      "largura_mm": 14,
+      "altura_mm": 14
+    },
+    {
+      "id": "T_PORCA_01",
+      "x_mm": 0,
+      "y_mm": 371.0,
+      "largura_mm": 14,
+      "altura_mm": 14
+    },
+    {
+      "id": "T_PORCA_10",
+      "x_mm": 24,
+      "y_mm": 371.0,
+      "largura_mm": 14,
+      "altura_mm": 14
+    },
+    {
+      "id": "T_PORCA_11",
+      "x_mm": 48,
+      "y_mm": 371.0,
+      "largura_mm": 14,
+      "altura_mm": 14
+    }
+  ]
+}

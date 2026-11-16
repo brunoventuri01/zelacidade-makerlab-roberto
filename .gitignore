@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+04_SOFTWARE_ROBERTO/python/
+04_SOFTWARE_ROBERTO/models/
+04_SOFTWARE_ROBERTO/runtime/
+04_SOFTWARE_ROBERTO/data/logs/
+04_SOFTWARE_ROBERTO/data/testes_audio/
+*.log
+.env
+*.zip

@@ -1,0 +1,10 @@
+ROBERTO — FACULDADE
+
+1. Abra ABRA_PRIMEIRO.html.
+2. Copie a pasta inteira para C:\ROBERTO no computador de apresentacao.
+3. Execute INICIAR_ROBERTO.bat para conversar em simulacao.
+4. Leia 05_GUIAS/02_ARDUINO_E_FIOS.html ANTES de ligar o LED e o servo.
+5. LED sem resistor externo usa INPUT_PULLUP: brilho muito fraco.
+6. Nao cortar o MDF sem conferir servo/horn e teste de encaixe.
+
+Nao e necessario instalar Python para usar a distribuicao Windows.

@@ -1,0 +1,2 @@
+@echo off
+call "%~dp004_SOFTWARE_ROBERTO\INICIAR_ROBERTO.bat"

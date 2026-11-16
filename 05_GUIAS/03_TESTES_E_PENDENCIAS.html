@@ -1,0 +1,82 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>03_TESTES_E_PENDENCIAS</title><style>body{font:16px/1.65 Segoe UI,Arial,sans-serif;margin:0;background:#f3f1ea;color:#24343b}main{max-width:1000px;margin:auto;padding:40px}h1,h2,h3{color:#154650;line-height:1.25}h1{font-size:34px}h2{margin-top:35px}a{color:#006b80}table{border-collapse:collapse;width:100%;background:white}td,th{border:1px solid #c9d2d1;padding:9px;text-align:left}pre{background:#e2e9e7;padding:18px;overflow:auto;white-space:pre-wrap}code{font-size:.9em}img{max-width:100%}.hero{padding:25px;background:#154650;border-radius:12px;color:white}.hero h1{color:white}.cards{display:grid;grid-template-columns:1fr 1fr;gap:15px}.card{background:white;border:1px solid #c9d2d1;border-radius:10px;padding:18px}.note{background:#ffebc6;padding:18px;border-left:5px solid #bd7b15}.small{font-size:14px}@media print{body{background:white}main{padding:0;max-width:none}h2,h3{break-after:avoid}table,pre{break-inside:avoid}.hero{background:white;color:#154650}.hero h1{color:#154650}}</style><main><p><a href="../ABRA_PRIMEIRO.html">← Voltar ao início do pacote</a></p><h1>Roberto — testes e pendências</h1>
+<p>Data: 26/10/2026. Cópia local baseada em <code>jzampieri/cp_04_iot</code>. Modo inicial: simulação.</p>
+<h2>Passou</h2>
+<ul>
+<li>Ambiente Python instalado; dependências verificadas com <code>pip check</code>.</li>
+<li><strong>29 testes automatizados</strong>: nome completo e limites de palavra, nome com pontuação, rejeição de nomes parecidos no texto, comandos diretos, janela de sete segundos, expiração, comandos sem nome ignorados, bloqueio de entrada durante fala, descarte de fila, LED/braço simulados, agenda/calculadora, confirmação serial com identificador, falha sem falso sucesso, cadastro usando imagem compartilhada e bloqueio de alteração de volume por transcrição sem relação com volume.</li>
+<li>Captura real de áudio pelo HyperX QuadCast.</li>
+<li>Voz neural masculina brasileira Piper Cadu instalada, sintetizada e reproduzida. Usuário confirmou que a pronúncia ficou melhor.</li>
+<li>Câmera índice 0: captura real de 640 × 480.</li>
+<li>IA Gemma 3 4B: conversa real em português, inferência local com uso da GPU RTX 4060 Ti.</li>
+<li>Análise real de imagem da webcam pela IA local, sem API de visão externa.</li>
+<li>Arquivo <code>INICIAR_ROBERTO.bat</code>: iniciou o servidor e abriu o painel; modo simulação ativo.</li>
+<li>Comandos humanos observados na sessão: levantar braço; acender luz; apagar luz; calcular 5 + 5; cotação; temperatura em São Paulo. Essas ações foram reconhecidas pelo microfone e encaminhadas. A cotação e o clima consultam internet.</li>
+<li>Firmware Arduino compilado para Uno R3, Nano clássico e Nano com bootloader antigo: 5960 bytes de programa e 322 bytes de variáveis globais. A compilação usa a montagem LED via INPUT_PULLUP, sem resistor externo.</li>
+<li>Cópia portátil: Python 3.12.14 executado de dentro da pasta da faculdade, sem usar a <code>.venv</code> original; imports de áudio, visão, IA e Tcl passaram. O Whisper foi carregado a partir dos modelos da cópia. Painel HTTP e comandos simulados foram exercitados por cliente de teste, sem disputar dispositivos com a sessão humana.</li>
+<li>DXF conjunto de 40 peças auditado novamente: unidades mm, contornos fechados e ausência de segmentos duplicados.</li>
+<li>Pacote: conferidos arquivos essenciais, 40 DXFs individuais mais 2 corpos de prova, firmware idêntico ao fonte, início em simulação e exclusão de agenda/rostos da sessão. Hashes dos arquivos essenciais em <code>VERIFICACAO_DO_PACOTE.json</code>.</li>
+</ul>
+<h2>Fala sintetizada → reconhecimento → comando</h2>
+<p>O ensaio usa <strong>arquivos de áudio sintetizado</strong>, não a voz de uma pessoa. Após remover do prompt a sugestão do nome, seis de sete casos passaram:</p>
+<table>
+<thead>
+<tr>
+<th>Caso</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“Roberto, levante o braço”</td>
+<td>Passou: ARM_UP simulado</td>
+</tr>
+<tr>
+<td>“Roberto, acenda a luz”</td>
+<td>Passou: LED_ON simulado</td>
+</tr>
+<tr>
+<td>“Roberto, qual é o seu nome?”</td>
+<td>Texto foi transcrito como “Cobeto…” nessa amostra; ignorado, sem ação. Repetir ensaio humano</td>
+</tr>
+<tr>
+<td>“Roberto!”</td>
+<td>Passou: abre janela após responder</td>
+</tr>
+<tr>
+<td>“Abaixe o braço” na janela</td>
+<td>Passou: ARM_DOWN simulado</td>
+</tr>
+<tr>
+<td>Pergunta sem Roberto</td>
+<td>Passou: ignorada</td>
+</tr>
+<tr>
+<td>“Roberta, acenda a luz”</td>
+<td>Passou: ignorada</td>
+</tr>
+</tbody>
+</table>
+<p>O nome exato não aceita “Cobeto” de propósito. Isso evita ampliar ativações acidentais. Pode ser necessário repetir uma chamada quando o reconhecimento errar. Os testes de lógica de identidade passam; o resultado acima é uma limitação do áudio/ASR, não uma autorização para anunciar reconhecimento perfeito.</p>
+<h2>Correções feitas nos ensaios</h2>
+<ul>
+<li>Restrições da API do Fusion corrigidas durante a criação mecânica.</li>
+<li>Vocabulário necessário do Whisper incluído no download.</li>
+<li>PyAV 19 substituído por 16.1, compatível com a versão instalada do faster-whisper.</li>
+<li>A voz Windows Maria e a voz Piper Faber foram substituídas por Cadu após o usuário avaliar a pronúncia.</li>
+<li>Pontuação após o nome (“Roberto.”) passou a ser tratada corretamente.</li>
+<li>Removida sugestão do nome no prompt do ASR: ela convertia uma amostra “Roberta” em “Roberto”.</li>
+<li>Cadastro facial legado que disputava a câmera com o painel substituído por captura do frame compartilhado; tempo limitado a 20 segundos. Testado com imagens sintéticas e câmera mockada; repetir cadastro humano para validar iluminação e distância.</li>
+<li>Uma transcrição imprecisa de pergunta foi roteada ao volume pelo LLM; adicionada exigência de pistas explícitas para ferramentas de volume, captura de tela e navegação.</li>
+</ul>
+<h2>Ainda depende de teste físico ou humano</h2>
+<ul>
+<li>Precisão com vozes, distâncias e ruídos diferentes; fala rápida e pausas variadas no ambiente da apresentação.</li>
+<li>Não reativar com a própria voz em condições acústicas reais usando alto-falantes próximos ao microfone. O bloqueio e descarte durante a síntese passaram nos testes de lógica; o dispositivo padrão observado era uma saída JBL, portanto não se declara eco cancelado em qualquer notebook.</li>
+<li>Cadastro e reconhecimento facial humano depois da correção. Não é autenticação biométrica segura.</li>
+<li>Gravação física no Arduino, porta/driver real, ACK real do firmware.</li>
+<li>LED sem resistor externo: brilho muito fraco via pull-up interno; pode não servir para apresentação iluminada.</li>
+<li>Servo alimentado só pelo USB: corrente, quedas de tensão, sentido e curso com o braço real.</li>
+<li>Encaixe do SG90 e do horn, espessura do MDF, folga e kerf após corte dos corpos de prova.</li>
+<li>Execução da pasta portátil em um segundo computador Windows e uso da GPU/CPU desse computador. Deve ser ensaiado antes da apresentação.</li>
+</ul>
+<p>Os comandos de captura de tela, alterações de volume e abertura de sites não foram exercitados indiscriminadamente. Permanecem disponíveis mediante pedido do usuário. O Arduino físico não foi simulado como se fosse uma placa real: o painel identifica todas as ações simuladas.</p></main></html>

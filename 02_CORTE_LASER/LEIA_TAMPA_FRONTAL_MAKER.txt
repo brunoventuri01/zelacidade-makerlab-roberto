@@ -1,0 +1,23 @@
+TAMPA FRONTAL MAKER — ROBERTO
+
+Arquivo para corte:
+TAMPA_FRONTAL_MAKER_LCD_HCSR04_LED.dxf
+
+Unidades: milimetros
+Escala: 1:1
+Material previsto: MDF nominal de 3 mm
+Compensacao de kerf: aplicar uma unica vez no software da maquina
+
+Recortes incluidos:
+- contorno e encaixes originais da tampa frontal: 140 x 146 mm;
+- janela visivel do LCD 1602: 66 x 16 mm;
+- quatro furos de fixacao do LCD: diametro 3,2 mm, padrao 75 x 31 mm;
+- dois furos para os transdutores do HC-SR04: diametro 17 mm, centros a 26 mm;
+- dois slots de 3 x 12 mm para prender o HC-SR04 com abracadeira;
+- um furo para LED de 5 mm: diametro 5,2 mm.
+
+IMPORTANTE: as dimensoes seguem os modelos anunciados (LCD 80 x 36,5 mm e
+HC-SR04 padrao). Antes do corte definitivo, compare as medidas com as pecas
+recebidas. Variantes de fabricante podem mudar furos e bordas em alguns mm.
+
+Posicao na frente, de cima para baixo: LCD, HC-SR04 e LED.

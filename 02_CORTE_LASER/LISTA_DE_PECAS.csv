@@ -1,0 +1,43 @@
+﻿peca;grupo;quantidade;largura_mm;altura_mm;area_mm2;nota
+C_FRENTE;02_Corpo;1;140.0;146.0;19904.165;
+C_TRAS;03_Tampa_traseira;1;140.0;146.0;19457.087;Nao colar: tampa removivel M3
+C_DIR;02_Corpo;1;95.0;146.0;12758.718;
+C_ESQ;02_Corpo;1;95.0;146.0;13048.963;
+C_BASE;02_Corpo;1;140.0;95.0;12091.96;
+C_TOPO;02_Corpo;1;140.0;95.0;12266.49;
+H_FRENTE;01_Cabeca;1;100.0;100.0;9166.317;
+H_TRAS;01_Cabeca;1;100.0;100.0;9640.4;
+H_DIR;01_Cabeca;1;100.0;100.0;9380.4;
+H_ESQ;01_Cabeca;1;100.0;100.0;9380.4;
+H_BASE;01_Cabeca;1;100.0;100.0;9118.89;
+H_TOPO;01_Cabeca;1;100.0;100.0;9193.6;
+N_PESCOCO;09_Suportes_internos;1;40.0;16.0;543.4;
+P_D1;08_Pes;1;58.0;120.0;6960.0;
+P_D2;08_Pes;1;58.0;120.0;6835.38;
+L_D1;07_Pernas;1;32.0;44.0;1335.4;
+L_D2;07_Pernas;1;32.0;44.0;1335.4;
+P_E1;08_Pes;1;58.0;120.0;6960.0;
+P_E2;08_Pes;1;58.0;120.0;6835.38;
+L_E1;07_Pernas;1;32.0;44.0;1335.4;
+L_E2;07_Pernas;1;32.0;44.0;1335.4;
+A_D_MOVEL;05_Braco_direito;1;30.0;112.0;2325.237;"Usar horn original; confirmar furos no horn real e ajustar antes do corte"
+A_E_FIXO;04_Braco_esquerdo;1;30.0;112.0;2351.843;
+A_E_ESP;09_Suportes_internos;1;16.0;30.0;461.843;
+S_REFORCO;06_Suporte_servomotor;1;44.0;28.0;923.598;"Inserir servo pelo interior; orelhas apoiam no reforco; conferir altura do eixo"
+T_PORCA_00;09_Suportes_internos;1;14.0;14.0;167.863;"Alojamento M3; colar lateral externa na lateral do corpo"
+T_CAPA_00;09_Suportes_internos;1;14.0;14.0;186.922;
+T_PORCA_01;09_Suportes_internos;1;14.0;14.0;167.863;"Alojamento M3; colar lateral externa na lateral do corpo"
+T_CAPA_01;09_Suportes_internos;1;14.0;14.0;186.922;
+T_PORCA_10;09_Suportes_internos;1;14.0;14.0;167.863;"Alojamento M3; colar lateral externa na lateral do corpo"
+T_CAPA_10;09_Suportes_internos;1;14.0;14.0;186.922;
+T_PORCA_11;09_Suportes_internos;1;14.0;14.0;167.863;"Alojamento M3; colar lateral externa na lateral do corpo"
+T_CAPA_11;09_Suportes_internos;1;14.0;14.0;186.922;
+I_BANDEJA;09_Suportes_internos;1;100.0;70.0;6736.0;"Arduino Uno em espacadores adesivos/nylon e abracadeiras; nao encostar soldas no MDF"
+I_APOIO00;09_Suportes_internos;1;3.0;70.0;210.0;Laminar tres unidades para obter 9 mm de apoio
+I_APOIO01;09_Suportes_internos;1;3.0;70.0;210.0;Laminar tres unidades para obter 9 mm de apoio
+I_APOIO02;09_Suportes_internos;1;3.0;70.0;210.0;Laminar tres unidades para obter 9 mm de apoio
+I_APOIO10;09_Suportes_internos;1;3.0;70.0;210.0;Laminar tres unidades para obter 9 mm de apoio
+I_APOIO11;09_Suportes_internos;1;3.0;70.0;210.0;Laminar tres unidades para obter 9 mm de apoio
+I_APOIO12;09_Suportes_internos;1;3.0;70.0;210.0;Laminar tres unidades para obter 9 mm de apoio
+TESTE_FEMEA;10_Teste_encaixe;1;100.0;32.0;2879.75;Da esquerda para direita: t-0.10 a t+0.20 em passos 0.05 mm
+TESTE_MACHO;10_Teste_encaixe;1;20.0;25.0;500.0;

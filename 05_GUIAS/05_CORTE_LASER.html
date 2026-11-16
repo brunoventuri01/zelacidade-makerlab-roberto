@@ -1,0 +1,30 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>05_CORTE_LASER</title><style>body{font:16px/1.65 Segoe UI,Arial,sans-serif;margin:0;background:#f3f1ea;color:#24343b}main{max-width:1000px;margin:auto;padding:40px}h1,h2,h3{color:#154650;line-height:1.25}h1{font-size:34px}h2{margin-top:35px}a{color:#006b80}table{border-collapse:collapse;width:100%;background:white}td,th{border:1px solid #c9d2d1;padding:9px;text-align:left}pre{background:#e2e9e7;padding:18px;overflow:auto;white-space:pre-wrap}code{font-size:.9em}img{max-width:100%}.hero{padding:25px;background:#154650;border-radius:12px;color:white}.hero h1{color:white}.cards{display:grid;grid-template-columns:1fr 1fr;gap:15px}.card{background:white;border:1px solid #c9d2d1;border-radius:10px;padding:18px}.note{background:#ffebc6;padding:18px;border-left:5px solid #bd7b15}.small{font-size:14px}@media print{body{background:white}main{padding:0;max-width:none}h2,h3{break-after:avoid}table,pre{break-inside:avoid}.hero{background:white;color:#154650}.hero h1{color:#154650}}</style><main><p><a href="../ABRA_PRIMEIRO.html">← Voltar ao início do pacote</a></p><h1>Roberto — o que entregar ao operador do laser</h1>
+<h2>Antes de cortar</h2>
+<p>Esta é uma revisão nominal em MDF de <strong>3 mm</strong>. Ainda é necessário conferir seu servo SG90, horn, espessura real da chapa e folga dos encaixes. Nenhum arquivo foi declarado pronto para um lote sem esses ensaios.</p>
+<ol>
+<li>Meça a espessura real da chapa com paquímetro.</li>
+<li>Confira no projeto os furos do servo e do horn com os componentes reais. O desenho usou abertura de 23,5 × 12,8 mm e 28 mm entre furos de suporte como valores preliminares.</li>
+<li>Corte primeiro as duas peças em <code>02_CORTE_LASER/TESTE_PRIMEIRO</code>.</li>
+<li>Use o mesmo MDF, foco, potência e velocidade do lote. Valide a folga à mão, sem martelar.</li>
+<li>Se precisar alterar espessura ou folga, corrija o projeto e gere os DXFs novamente antes de cortar o robô.</li>
+</ol>
+<h2>Arquivo principal de corte</h2>
+<p><strong><code>02_CORTE_LASER/ROBERTO_40_PECAS_NOMINAL.dxf</code></strong> contém as 40 placas do robô, em milímetros, escala 1:1, sem os dois corpos de prova.</p>
+<p>As mesmas peças estão separadas em <code>PECAS_INDIVIDUAIS</code>. São uma alternativa ao arquivo principal. <strong>Não corte o arquivo principal e a pasta inteira juntos</strong>, pois isso duplicaria as peças.</p>
+<p>A distribuição do arquivo principal é uma prancha de visualização, com espaço entre peças. Não representa a mesa da máquina e não é um aproveitamento definitivo de chapa. O operador deverá reorganizar as peças conforme a área útil, mantendo as medidas reais e quantidades.</p>
+<h2>Pedido para o laboratório</h2>
+<p>“Este projeto é para MDF nominal de 3 mm, em milímetros e escala 1:1. Primeiro vamos cortar o teste de encaixe e conferir o SG90 e o horn. Depois use o arquivo ROBERTO_40_PECAS_NOMINAL.dxf, organize as peças na chapa e aplique uma única compensação de kerf no programa de corte. Não redimensione as peças. Todas as linhas da camada CORTE são cortes passantes; não há gravação nesta revisão.”</p>
+<h2>Conferência rápida</h2>
+<ul>
+<li>Frente do corpo <code>C_FRENTE</code>: <strong>140 × 146 mm</strong> no desenho nominal.</li>
+<li>Cabeça: seis painéis para um cubo externo de <strong>100 mm</strong>.</li>
+<li>Total: <strong>40 peças do robô + 2 corpos de prova separados</strong>.</li>
+<li>A lista CSV inclui todos os 42 códigos, com quantidade 1 para cada código. Algumas peças iguais têm códigos distintos para facilitar a montagem.</li>
+<li>Os projetos F3D são para abrir no Fusion, não para enviar diretamente ao laser.</li>
+<li>A vista espalhada do Fusion mostra 42 peças, pois inclui também os testes.</li>
+<li>Não abrir o DXF num editor de imagem e imprimir ajustando à página.</li>
+<li>Meça o kerf real e use compensação do operador; os contornos entregues não estão pré-compensados.</li>
+</ul>
+<h2>Montagem depois do corte</h2>
+<p>Comece pelos pés laminados e pernas. Faça montagem a seco das caixas antes de colar. Mantenha a tampa traseira removível e proteja os encaixes da tampa contra cola. O guia completo está em <code>05_GUIAS/01_MONTAGEM_MDF.html</code>.</p>
+<p>O arquivo F3D é editável por esboços/extrusões. Para alterar a geometria gerada por parâmetros, o gerador mecânico precisa ser executado novamente; editar apenas o valor de uma cota global não atualiza todos os contornos automaticamente. O grupo deve registrar sua própria modelagem conforme a exigência de autoria da faculdade.</p></main></html>
