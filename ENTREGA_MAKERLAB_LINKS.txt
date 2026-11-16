@@ -1,0 +1,16 @@
+GLOBAL SOLUTION 2026.2 - PROJECT-BASED MAKER LAB
+Projeto: ZelaCidade - Roberto, robô inteligente para CitizenTech
+
+INTEGRANTES
+
+Bruno Venturi Lopes Vieira - RM 99431
+Guilherme Alves de Lima - RM 550433
+Leonardo de Oliveira Ruiz - RM 98901
+
+REPOSITORIO PUBLICO DO PROJETO
+
+https://github.com/brunoventuri01/zelacidade-makerlab-roberto
+
+VIDEO DEMONSTRATIVO
+
+https://youtu.be/zp226N_uSEo
