@@ -1,7 +1,7 @@
 """VAD WebRTC + Whisper local. Nenhum audio e enviado para a internet."""
 from collections import deque
 from pathlib import Path
-import json, queue, threading, time
+import hashlib,json,queue,threading,time
 import numpy as np
 
 class LocalRecognizer:
@@ -112,6 +112,7 @@ class KokoroVoiceBackend:
     def __init__(self,model_path,voices_path,voice='pm_alex',speed=1.0):
         self.model_path=Path(model_path);self.voices_path=Path(voices_path)
         self.voice=voice;self.speed=speed;self.model=None;self.lock=threading.Lock()
+        self.cache_dir=self.model_path.parent/'cache';self.cache_dir.mkdir(parents=True,exist_ok=True)
         self.last_voice=self.label
     @property
     def label(self):
@@ -122,13 +123,29 @@ class KokoroVoiceBackend:
             self.model=Kokoro(str(self.model_path),str(self.voices_path))
         return self.model
     def speak(self,text,output_device=None):
-        import numpy as np,sounddevice as sd
+        import numpy as np,sounddevice as sd,soundfile as sf
         with self.lock:
-            samples,rate=self.load().create(text,voice=self.voice,speed=self.speed,lang='pt-br',trim=True)
+            key=hashlib.sha256(f'{self.voice}|{self.speed}|{text}'.encode('utf-8')).hexdigest()
+            cached=self.cache_dir/f'{key}.wav'
+            if cached.exists():samples,rate=sf.read(cached,dtype='float32')
+            else:
+                samples,rate=self.load().create(text,voice=self.voice,speed=self.speed,lang='pt-br',trim=True)
+                sf.write(cached,samples,rate)
             padding=np.zeros(int(rate*.18),dtype=np.float32)
             audio=np.concatenate((padding,np.asarray(samples,dtype=np.float32),padding[:int(rate*.08)]))
             sd.play(audio,rate,device=output_device,blocking=True)
             self.last_voice=self.label
+    def warm(self,texts):
+        """Carrega o modelo e deixa respostas frequentes prontas no cache."""
+        import soundfile as sf
+        with self.lock:
+            model=self.load()
+            for text in texts:
+                key=hashlib.sha256(f'{self.voice}|{self.speed}|{text}'.encode('utf-8')).hexdigest()
+                cached=self.cache_dir/f'{key}.wav'
+                if not cached.exists():
+                    samples,rate=model.create(text,voice=self.voice,speed=self.speed,lang='pt-br',trim=True)
+                    sf.write(cached,samples,rate)
 
 class PiperVoiceBackend:
     """Voz neural masculina pt-BR; inferencia e reproducao integralmente locais."""

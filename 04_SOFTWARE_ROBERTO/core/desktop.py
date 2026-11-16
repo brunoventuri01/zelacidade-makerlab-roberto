@@ -263,8 +263,24 @@ class DesktopRuntime:
                 return
             except Exception as exc:logging.info('Conexão automática em %s falhou: %s',port,exc)
         self.emit('serial',{'connected':False,'automatic':True})
+    def warm_voice(self):
+        if not isinstance(self.voice,KokoroVoiceBackend):return
+        try:
+            self.health['voz']=self.voice.label+' · preparando'
+            self.voice.warm([
+                'Olá! É um prazer cumprimentar você.',
+                'Pronto, levantei o braço.',
+                'Pronto, abaixei o braço.',
+                'Pronto, acendi a luz.',
+                'Pronto, apaguei a luz.',
+                'Meu nome é Roberto! Sou o robô inteligente do projeto CP5.',
+            ])
+            self.health['voz']=self.voice.label+' · pronta'
+            self.emit('health',dict(self.health))
+        except Exception as exc:self.fail('Preparação da voz',exc)
     def start(self):
         self.camera.start();self.audio.start()
         threading.Thread(target=self.check_llm,daemon=True).start()
         threading.Thread(target=self.auto_connect_robot,daemon=True,name='Roberto-serial').start()
+        threading.Thread(target=self.warm_voice,daemon=True,name='Roberto-voz').start()
     def close(self):self.audio.close();self.camera.stop.set();self.robot.close();self.pool.shutdown(wait=False,cancel_futures=True)

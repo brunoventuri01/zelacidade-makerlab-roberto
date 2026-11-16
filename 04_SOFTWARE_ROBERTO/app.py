@@ -53,6 +53,7 @@ def microphone(body:Toggle):runtime.toggle_mic(body.enabled);return {'enabled':r
 def options(body:Options):
     runtime.config.update(body.model_dump())
     runtime.configure_voice(body.voz_modelo)
+    threading.Thread(target=runtime.warm_voice,daemon=True,name='Roberto-voz-opcao').start()
     # Permite mover o notebook: salvar opcoes, mas nunca persistir hardware como padrao.
     (ROOT/'config_roberto.json').write_text(json.dumps(runtime.config,ensure_ascii=False,indent=2),encoding='utf-8')
     return {'ok':True}
