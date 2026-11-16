@@ -58,10 +58,10 @@ class RobotController:
                 self.last_distance=cm
                 situacao='obstáculo próximo' if cm<=30 else 'atenção' if cm<=70 else 'caminho livre'
                 self.publish('sensor',{'distance_cm':cm,'classification':situacao,'simulated':self.simulation})
-                return ('Na simulação, ' if self.simulation else 'O sensor mediu ')+f'{cm:.0f} centímetros: {situacao}.'
+                return ('Na simulação, ' if self.simulation else '')+f'A distância é de {cm:.0f} centímetros. {situacao.capitalize()}.'
             self.publish('action',{'action':action,'simulated':self.simulation,'arm_up':self.arm_up,'led_on':self.led_on})
-            texts={'ARM_UP':'levantei meu braço','ARM_DOWN':'abaixei meu braço','LED_ON':'acendi a luz','LED_OFF':'apaguei a luz','WAVE':'fiz um aceno. Olá!'}
-            return ('Na simulação, ' if self.simulation else 'O Arduino confirmou: ')+texts[action]+'.'
+            texts={'ARM_UP':'Pronto, levantei o braço','ARM_DOWN':'Pronto, abaixei o braço','LED_ON':'Pronto, acendi a luz','LED_OFF':'Pronto, apaguei a luz','WAVE':'Olá! É um prazer cumprimentar você'}
+            return ('Na simulação: ' if self.simulation else '')+texts[action]+'.'
 
 class RobotSkill(Skill):
     nome='roberto_acoes'

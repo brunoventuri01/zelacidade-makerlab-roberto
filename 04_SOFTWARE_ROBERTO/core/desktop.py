@@ -236,5 +236,26 @@ class DesktopRuntime:
             'busy':self.busy,'level':self.level,'simulated':self.robot.simulation,'arm_up':self.robot.arm_up,'led_on':self.robot.led_on,'distance_cm':self.robot.last_distance,
             'health':dict(self.health),'events':[e for e in self.events if e['seq']>after],
             'window_remaining':max(0,self.window_until-time.monotonic()),'config':{k:self.config.get(k) for k in ('janela_comando_segundos','voz_ativa','dispositivo_saida')}}
-    def start(self):self.camera.start();self.audio.start();threading.Thread(target=self.check_llm,daemon=True).start()
+    def auto_connect_robot(self):
+        """Reconecta a placa conhecida; se a COM mudar, procura um Arduino disponível."""
+        from serial.tools import list_ports
+        time.sleep(1)
+        ports=list(list_ports.comports())
+        preferred=self.config.get('porta_serial')
+        candidates=[]
+        if preferred:candidates.extend(p.device for p in ports if p.device.casefold()==preferred.casefold())
+        candidates.extend(p.device for p in ports if any(word in (p.description+' '+(p.manufacturer or '')).casefold() for word in ('arduino','ch340','usb serial')))
+        candidates.extend(p.device for p in ports if p.device.upper()=='COM3')
+        for port in dict.fromkeys(candidates):
+            try:
+                self.robot.connect(port,self.config['baud_serial'])
+                self.config['porta_serial']=port
+                self.emit('serial',{'connected':True,'port':port,'automatic':True})
+                return
+            except Exception as exc:logging.info('Conexão automática em %s falhou: %s',port,exc)
+        self.emit('serial',{'connected':False,'automatic':True})
+    def start(self):
+        self.camera.start();self.audio.start()
+        threading.Thread(target=self.check_llm,daemon=True).start()
+        threading.Thread(target=self.auto_connect_robot,daemon=True,name='Roberto-serial').start()
     def close(self):self.audio.close();self.camera.stop.set();self.robot.close();self.pool.shutdown(wait=False,cancel_futures=True)

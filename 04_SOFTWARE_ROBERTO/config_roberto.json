@@ -11,7 +11,7 @@
   "webcam_ativa": true,
   "indice_camera": 0,
   "voz_ativa": true,
-  "motor_voz": "piper",
+  "motor_voz": "windows",
   "modelo_voz": "models/piper/pt_BR-cadu-medium.onnx",
   "ritmo_voz": 1.0,
   "velocidade_voz": 175,
@@ -20,6 +20,6 @@
   "modelo_ia": "gemma3:4b",
   "ollama_url": "http://127.0.0.1:11435",
   "porta_painel": 8765,
-  "porta_serial": "",
+  "porta_serial": "COM3",
   "baud_serial": 115200
 }

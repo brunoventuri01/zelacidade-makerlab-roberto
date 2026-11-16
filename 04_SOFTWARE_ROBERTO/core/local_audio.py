@@ -101,7 +101,9 @@ class WindowsVoice:
             voice.Rate=max(-5,min(5,round((self.rate-175)/25)));voice.Volume=90
             if output_device:
                 for token in voice.GetAudioOutputs():
-                    if output_device.casefold() in token.GetDescription().casefold():voice.AudioOutput=token;break
+                    wanted=str(output_device).casefold()
+                    available=token.GetDescription().casefold()
+                    if wanted in available or available in wanted:voice.AudioOutput=token;break
             voice.Speak(text,0)
         finally:pythoncom.CoUninitialize()
 

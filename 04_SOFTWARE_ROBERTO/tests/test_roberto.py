@@ -82,7 +82,7 @@ def test_real_command_requires_matching_ack():
     def ack():
         sent=json.loads(serial.write.call_args.args[0]);return json.dumps({'id':sent['id'],'ok':True}).encode()
     serial.readline.side_effect=ack;r.serial=serial
-    assert 'Arduino confirmou' in r.perform('ARM_UP');assert r.arm_up
+    assert 'levantei o braço' in r.perform('ARM_UP');assert r.arm_up
 
 def test_hardware_failure_does_not_report_success():
     r=RobotController(False)

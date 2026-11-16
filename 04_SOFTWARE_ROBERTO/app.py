@@ -35,7 +35,7 @@ class Toggle(BaseModel):enabled:bool
 class Options(BaseModel):
     janela_comando_segundos:float=Field(ge=2,le=30)
     voz_ativa:bool
-    dispositivo_saida:Optional[int]=None
+    dispositivo_saida:Optional[str]=None
 class SerialOptions(BaseModel):port:str=Field(min_length=1,max_length=40)
 
 @app.get('/',response_class=HTMLResponse)
@@ -57,7 +57,7 @@ def options(body:Options):
 @app.get('/api/audio-outputs')
 def audio_outputs():
     import sounddevice as sd
-    return [{'id':index,'name':device['name']} for index,device in enumerate(sd.query_devices()) if int(device.get('max_output_channels',0))>0]
+    return [{'id':device['name'],'name':device['name']} for device in sd.query_devices() if int(device.get('max_output_channels',0))>0]
 @app.get('/api/camera.jpg')
 def camera():
     with runtime.camera.lock:jpeg=runtime.camera.jpeg
@@ -72,6 +72,8 @@ def serial_connect(body:SerialOptions):
     if runtime.busy:raise HTTPException(409,'Aguarde o comando terminar')
     try:runtime.robot.connect(body.port,runtime.config['baud_serial'])
     except Exception as exc:raise HTTPException(400,str(exc))
+    runtime.config['porta_serial']=body.port
+    (ROOT/'config_roberto.json').write_text(json.dumps(runtime.config,ensure_ascii=False,indent=2),encoding='utf-8')
     return {'simulated':False}
 @app.post('/api/simulation')
 def simulation():
